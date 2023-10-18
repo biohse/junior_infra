@@ -25,3 +25,5 @@ services:
       DEFAULT_EMAIL: nkengibaryan@edu.hse.ru
     networks:
       - jupyterhub_default
+networks:
+  jupyterhub_default: {}
