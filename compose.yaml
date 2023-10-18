@@ -8,7 +8,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     ports:
-      - 8080:8000
+      - 80:8000
     environment:
       DOCKER_JUPYTER_IMAGE: jupyter/scipy-notebook
       DOCKER_NETWORK_NAME: jupyterhub_default
