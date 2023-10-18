@@ -13,8 +13,8 @@ services:
       - html:/usr/share/nginx/html
     labels:
       com.github.nginx-proxy.nginx: ""
-    environment:
-      DEFAULT_HOST: jupyterhub.biohse.ru
+    # environment:
+    #   DEFAULT_HOST: jupyterhub.biohse.ru
     networks:
       - jupyterhub_default
     restart: unless-stopped
