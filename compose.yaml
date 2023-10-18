@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  jupyterhub:
+    image: jupyterhub
+    build: ./jupyterhub
+    container_name: jupyterhub-hub
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    ports:
+      - 8000:8000
+    environment:
+      DOCKER_JUPYTER_IMAGE: jupyter/scipy-notebook
+      DOCKER_NETWORK_NAME: jupyterhub_default
+      HUB_IP: jupyterhub-hub
