@@ -13,8 +13,12 @@ services:
       - html:/usr/share/nginx/html
     labels:
       com.github.nginx-proxy.nginx: ""
+    environment:
+      DEFAULT_HOST: jupyterhub.biohse.ru
     networks:
       - jupyterhub_default
+    restart: unless-stopped
+
   nginx-proxy-acme:
     image: nginxproxy/acme-companion
     volumes:
@@ -27,6 +31,7 @@ services:
       DEFAULT_EMAIL: nkengibaryan@edu.hse.ru
     networks:
       - jupyterhub_default
+    restart: unless-stopped
 
 networks:
   jupyterhub_default:

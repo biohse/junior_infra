@@ -17,3 +17,4 @@ services:
       VIRTUAL_HOST: jupyterhub.biohse.ru
       LETSENCRYPT_HOST: jupyterhub.biohse.ru
       VIRTUAL_PORT: 8000
+    restart: unless-stopped
