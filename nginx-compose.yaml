@@ -17,6 +17,7 @@ services:
     #   DEFAULT_HOST: jupyterhub.biohse.ru
     networks:
       - jupyterhub_default
+      - portainer_bridge
     restart: unless-stopped
 
   nginx-proxy-acme:
@@ -31,10 +32,13 @@ services:
       DEFAULT_EMAIL: nkengibaryan@edu.hse.ru
     networks:
       - jupyterhub_default
+      - portainer_bridge
     restart: unless-stopped
 
 networks:
   jupyterhub_default:
+    external: true
+  portainer_bridge:
     external: true
 
 volumes:
