@@ -32,6 +32,7 @@ jobs:
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
       run: |
+        cd ansible
         ansible-playbook playbooks/test.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
 
 
