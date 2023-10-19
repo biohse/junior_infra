@@ -9,12 +9,16 @@
         copy:
           src: ../../jupyterhub # We are in junior_infra/ansible/playbooks
           dest: jupyterhub
-      - name: Deploy
-        environment:
-          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
-        community.docker.docker_compose:
-          project_src: "jupyterhub"
-          files: ["compose.yaml"]
-      - name: Show results
-        ansible.builtin.debug:
-          var: output
+      - name: List
+        command: ls .
+      - name: List
+        command: ls jupyterhub
+      # - name: Deploy
+      #   environment:
+      #     PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+      #   community.docker.docker_compose:
+      #     project_src: "jupyterhub"
+      #     files: ["compose.yaml"]
+      # - name: Show results
+      #   ansible.builtin.debug:
+      #     var: output
