@@ -5,6 +5,10 @@
       - name: Install dependencies
         ansible.builtin.pip: 
           name: ["docker", "PyYAML", "docker-compose"]
+      - name: copy Docker Compose files
+        copy:
+          src: ../jupyterhub
+          dest: jupyterhub
       - name: List
         command: ls .
       # - name: Deploy
