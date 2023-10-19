@@ -5,10 +5,14 @@
       - name: Install dependencies
         ansible.builtin.pip: 
           name: ["docker", "PyYAML", "docker-compose"]
-      - name: Deploy
-        community.docker.docker_compose:
-          project_src: "../jupyterhub"
-          files: ["compose.yaml"]
-      - name: Show results
-        ansible.builtin.debug:
-          var: output
+      - name: List
+        command: ls .
+      # - name: Deploy
+      #   environment:
+      #     PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+      #   community.docker.docker_compose:
+      #     project_src: "../jupyterhub"
+      #     files: ["compose.yaml"]
+      # - name: Show results
+      #   ansible.builtin.debug:
+      #     var: output
