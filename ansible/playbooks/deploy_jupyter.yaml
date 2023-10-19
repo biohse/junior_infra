@@ -2,6 +2,8 @@
   - name: Deploy JupyterHub
     hosts: "{{ target_hosts | default('all') }}"
     tasks:
+      - name: Install dependencies
+        ansible.builtin.pip: ["docker", "PyYAML", "docker-compose"]
       - name: Deploy
         community.docker.docker_compose:
           project_src: "../jupyterhub"
