@@ -1,12 +1,4 @@
 ---
-  - name: Ping hosts
-    hosts: "{{ target_hosts | default('all') }}"
-    gather_facts: False
-    connection: local
-    tasks:
-      - name: ping
-        shell: ping -c 1 -w 2 {{ ansible_host }}
-  
   - name: Connect to hosts
     hosts: "{{ target_hosts | default('all') }}"
     tasks:
