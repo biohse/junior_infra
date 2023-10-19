@@ -7,7 +7,7 @@
           name: ["docker", "PyYAML", "docker-compose"]
       - name: copy Docker Compose files
         copy:
-          src: ../jupyterhub
+          src: ../../jupyterhub # We are in junior_infra/ansible/playbooks
           dest: jupyterhub
       - name: List
         command: ls .
