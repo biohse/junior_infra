@@ -1,0 +1,5 @@
+nodes:
+  hosts:
+    junior:
+      ansible_host: 80.90.191.205
+      ansible_port: 2255
