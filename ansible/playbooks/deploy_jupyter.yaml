@@ -5,18 +5,16 @@
       - name: Install dependencies
         ansible.builtin.pip: 
           name: ["docker", "PyYAML", "docker-compose"]
-      - name: copy Docker Compose files
+      - name: Copy Docker Compose files
         copy:
           src: ../../jupyterhub # We are in junior_infra/ansible/playbooks
           dest: jupyterhub
-      - name: List
-        command: ls .
-      # - name: Deploy
-      #   environment:
-      #     PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
-      #   community.docker.docker_compose:
-      #     project_src: "../jupyterhub"
-      #     files: ["compose.yaml"]
-      # - name: Show results
-      #   ansible.builtin.debug:
-      #     var: output
+      - name: Deploy
+        environment:
+          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+        community.docker.docker_compose:
+          project_src: "jupyterhub"
+          files: ["compose.yaml"]
+      - name: Show results
+        ansible.builtin.debug:
+          var: output
