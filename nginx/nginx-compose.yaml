@@ -18,6 +18,7 @@ services:
     networks:
       - jupyterhub_default
       - portainer_bridge
+      - cvat_cvat
     restart: unless-stopped
 
   nginx-proxy-acme:
@@ -33,12 +34,15 @@ services:
     networks:
       - jupyterhub_default
       - portainer_bridge
+      - cvat_cvat
     restart: unless-stopped
 
 networks:
   jupyterhub_default:
     external: true
   portainer_bridge:
+    external: true
+  cvat_cvat:
     external: true
 
 volumes:
