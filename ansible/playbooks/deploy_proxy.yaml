@@ -7,11 +7,12 @@
           name: ["docker", "PyYAML", "docker-compose"]
       - name: Copy Docker Compose files
         copy:
-          src: ../../jupyterhub # We are in junior_infra/ansible/playbooks
+          src: ../../nginx # We are in junior_infra/ansible/playbooks
           dest: ".ansible/"
       - name: Deploy
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
         community.docker.docker_compose:
-          project_src: ".ansible/jupyterhub"
+          project_name: nginx-proxy
+          project_src: ".ansible/nginx"
           debug: true

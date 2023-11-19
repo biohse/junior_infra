@@ -29,9 +29,17 @@ jobs:
         echo "$ANSIBLE_VAULT_PASSWORD" > .vault_password
         mv ansible-ci.cfg ansible.cfg
         ansible-galaxy install -r requirements.yml
-    - name: Run Playbook
+
+    - name: Deploy JupyterHub
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
       run: |
         cd ansible
         ansible-playbook playbooks/deploy_jupyter.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
+
+    - name: Deploy Nginx Proxy
+      env:
+        ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
+      run: |
+        cd ansible
+        ansible-playbook playbooks/deploy_proxy.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
