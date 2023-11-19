@@ -3,7 +3,7 @@ version: '3'
 services:
   jupyterhub:
     image: jupyterhub
-    build: ./jupyterhub
+    # build: ./jupyterhub
     container_name: jupyterhub-hub
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
