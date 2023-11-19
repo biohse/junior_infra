@@ -1,0 +1,18 @@
+---
+  - name: Deploy JupyterHub
+    hosts: "{{ target_hosts | default('all') }}"
+    tasks:
+      - name: Install dependencies
+        ansible.builtin.pip: 
+          name: ["docker", "PyYAML", "docker-compose"]
+      - name: Copy Docker Compose files
+        copy:
+          src: ../../manifests/keycloak # We are in junior_infra/ansible/playbooks
+          dest: ".ansible/"
+      - name: Deploy
+        environment:
+          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+        community.docker.docker_compose:
+          project_name: keycloak
+          project_src: ".ansible/keycloak"
+          debug: true
