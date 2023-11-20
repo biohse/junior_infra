@@ -1,5 +1,5 @@
 ---
-  - name: Deploy JupyterHub
+  - name: Deploy Nginx Proxy
     hosts: "{{ target_hosts | default('all') }}"
     tasks:
       - name: Install dependencies

@@ -9,6 +9,8 @@
         copy:
           src: ../../manifests/jupyterhub # We are in junior_infra/ansible/playbooks
           dest: ".ansible/"
+          mode: "600"
+          decrypt: false
       - name: Deploy
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}

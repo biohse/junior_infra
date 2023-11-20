@@ -2,13 +2,15 @@ version: "3.2"
 services:
 
   outline:
-    image: docker.getoutline.com/outlinewiki/outline:latest
-    env_file: ./docker.env
-    ports:
-      - "3000:3000"
+    image: outlinewiki/outline:0.73.1
+    env_file: ./.env
     volumes:
       - storage-data:/var/lib/outline/data
     environment:
+      SECRET_KEY: "${SECRET_KEY}"
+      UTILS_SECRET: "${UTILS_SECRET}"
+      OIDC_CLIENT_SECRET: "${OIDC_CLIENT_SECRET}"
+      DATABASE_URL: "postgres://user:${POSTGRES_PASSWORD}@postgres:5432/outline"
       VIRTUAL_HOST: wiki.biohse.ru
       LETSENCRYPT_HOST: wiki.biohse.ru
       VIRTUAL_PORT: 3000
@@ -18,9 +20,7 @@ services:
 
   redis:
     image: redis
-    env_file: ./docker.env
-    ports:
-      - "6379:6379"
+    env_file: ./.env
     volumes:
       - ./redis.conf:/redis.conf
     command: ["redis-server", "/redis.conf"]
@@ -32,9 +32,7 @@ services:
 
   postgres:
     image: postgres
-    env_file: ./docker.env
-    ports:
-      - "5432:5432"
+    env_file: ./.env
     volumes:
       - database-data:/var/lib/postgresql/data
     healthcheck:
@@ -44,33 +42,24 @@ services:
       retries: 3
     environment:
       POSTGRES_USER: 'user'
-      POSTGRES_PASSWORD: 'pass'
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: 'outline'
 
-  https-portal:
-    image: steveltn/https-portal
-    env_file: ./docker.env
-    ports:
-      - '80:80'
-      - '443:443'
-    links:
-      - outline
-    restart: always
-    volumes:
-      - https-portal-data:/var/lib/https-portal
-    healthcheck:
-      test: ["CMD", "service", "nginx", "status"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-    environment:
-      DOMAINS: 'docs.mycompany.com -> http://outline:3000'
-      STAGE: 'production'
-      WEBSOCKET: 'true'
-      CLIENT_MAX_BODY_SIZE: '0'
+  # grist:
+  #   image: gristlabs/grist
+  #   environment:
+  #     GRIST_FORWARD_AUTH_HEADER: X-Forwarded-User
+  #     GRIST_FORWARD_AUTH_LOGOUT_PATH: _oauth/logout
+  #     GRIST_SINGLE_ORG: fbb  # alternatively, GRIST_ORG_IN_PATH: "true" for multi-team operation
+  #     GRIST_DEFAULT_EMAIL: ${EMAIL}
+  #     APP_HOME_URL: https://grist.biohse.ru
+  #     VIRTUAL_HOST: grist.biohse.ru
+  #     LETSENCRYPT_HOST: grist.biohse.ru
+  #     VIRTUAL_PORT: 8484
+  #   volumes:
+  #     - grist-data:/persist
 
 volumes:
-  https-portal-data:
   storage-data:
   database-data:
-
+  # grist-data:

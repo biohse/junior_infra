@@ -11,6 +11,7 @@ services:
       - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - ./my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf:ro
     labels:
       com.github.nginx-proxy.nginx: ""
     # environment:
@@ -19,6 +20,8 @@ services:
       - jupyterhub_default
       - portainer_bridge
       - cvat_cvat
+      - keycloak_default
+      - outline_default
     restart: unless-stopped
 
   nginx-proxy-acme:
@@ -35,6 +38,8 @@ services:
       - jupyterhub_default
       - portainer_bridge
       - cvat_cvat
+      - keycloak_default
+      - outline_default
     restart: unless-stopped
 
 networks:
@@ -43,6 +48,10 @@ networks:
   portainer_bridge:
     external: true
   cvat_cvat:
+    external: true
+  keycloak_default:
+    external: true
+  outline_default:
     external: true
 
 volumes:

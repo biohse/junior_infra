@@ -1,25 +1,26 @@
 ---
-  - name: Deploy Keycloak
+  - name: Deploy Outline Wiki
     hosts: "{{ target_hosts | default('all') }}"
     vars_files:
-      - ../../manifests/keycloak/secret-env.yaml  
+      - ../../manifests/outline/secret-env.yaml  
     tasks:
       - name: Install dependencies
         ansible.builtin.pip: 
           name: ["docker", "PyYAML", "docker-compose"]
       - name: Copy Docker Compose files
         copy:
-          src: ../../manifests/keycloak # We are in junior_infra/ansible/playbooks
+          src: ../../manifests/outline # We are in junior_infra/ansible/playbooks
           dest: ".ansible/"
           mode: "0600"
           decrypt: false
       - name: Deploy
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
-          KEYCLOAK_ADMIN_PASSWORD: "{{ KEYCLOAK_ADMIN_PASSWORD }}"
+          SECRET_KEY: "{{ SECRET_KEY }}"
+          UTILS_SECRET: "{{ UTILS_SECRET }}"
+          OIDC_CLIENT_SECRET: "{{ OIDC_CLIENT_SECRET }}"
           POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
         community.docker.docker_compose:
-          project_name: keycloak
-          env_file: ".ansible/keycloak/.env"
-          project_src: ".ansible/keycloak"
+          project_name: outline
+          project_src: ".ansible/outline"
           debug: true

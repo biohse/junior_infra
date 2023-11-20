@@ -6,7 +6,7 @@ services:
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: postgres
     healthcheck:
       test: pg_isready -d postgres
@@ -27,21 +27,20 @@ services:
     environment:
       KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
       KC_DB_USERNAME: postgres
-      KC_DB_PASSWORD: postgres
+      KC_DB_PASSWORD: "${POSTGRES_PASSWORD}"
       KC_DB_SCHEMA: public
       KC_FEATURES: preview
+      KC_HEALTH_ENABLED: "true"
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD}"
       VIRTUAL_HOST: login.biohse.ru
       LETSENCRYPT_HOST: login.biohse.ru
       VIRTUAL_PORT: 8080
-    ports:
-      - 8282:8080
     depends_on:
       keycloak-postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master"]
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/0.0.0.0/8080;echo -e \"GET /auth/health/ready HTTP/1.1\r\nhost: http://localhost\r\nConnection: close\r\n\r\n\" >&3;grep \"HTTP/1.1 200 OK\" <&3"]
       start_period: 10s
       interval: 30s
       retries: 3
