@@ -3,7 +3,7 @@ services:
 
   outline:
     image: outlinewiki/outline:0.73.1
-    env_file: ./.env
+    env_file: ./docker.env
     volumes:
       - storage-data:/var/lib/outline/data
     environment:
@@ -20,7 +20,7 @@ services:
 
   redis:
     image: redis
-    env_file: ./.env
+    env_file: ./docker.env
     volumes:
       - ./redis.conf:/redis.conf
     command: ["redis-server", "/redis.conf"]
@@ -32,7 +32,7 @@ services:
 
   postgres:
     image: postgres
-    env_file: ./.env
+    env_file: ./docker.env
     volumes:
       - database-data:/var/lib/postgresql/data
     healthcheck:
