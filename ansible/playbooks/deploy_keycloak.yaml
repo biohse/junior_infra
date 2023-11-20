@@ -20,6 +20,5 @@
           POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
         community.docker.docker_compose:
           project_name: keycloak
-          env_file: ".ansible/keycloak/.env"
           project_src: ".ansible/keycloak"
           debug: true
