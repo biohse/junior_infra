@@ -2,14 +2,23 @@ version: '3'
 
 services:
   jupyterhub:
-    image: jupyterhub
+    # image: jupyterhub
+    build:
+      context: ./hub
+      dockerfile: Dockerfile
     container_name: jupyterhub-hub
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./hub/jupyterhub_config.py:/jupyterhub_config.py:ro
     environment:
       DOCKER_JUPYTER_IMAGE: jupyter/scipy-notebook
       DOCKER_NETWORK_NAME: jupyterhub_default
       HUB_IP: jupyterhub-hub
+      OAUTH_CLIENT_ID: jupyter-junior
+      OAUTH_CLIENT_SECRET: "${OAUTH_CLIENT_SECRET}"
+      OAUTH_AUTHORIZE_URL: https://login.biohse.ru/realms/staff/protocol/openid-connect/auth
+      OAUTH_TOKEN_URL: https://login.biohse.ru/realms/staff/protocol/openid-connect/token
+      OAUTH_USERDATA_URL: https://login.biohse.ru/realms/staff/protocol/openid-connect/userinfo
       VIRTUAL_HOST: jupyterhub.biohse.ru,biohse.ru
       LETSENCRYPT_HOST: jupyterhub.biohse.ru,biohse.ru
       VIRTUAL_PORT: 8000

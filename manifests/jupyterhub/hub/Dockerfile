@@ -4,6 +4,8 @@ RUN mamba install configurable-http-proxy -y && \
     dockerspawner \
     jupyterhub \
     jupyterhub-firstuseauthenticator \
-    jupyterhub-idle-culler
+    jupyterhub-idle-culler \
+    oauthenticator \
+    pycurl
 COPY . .
 ENTRYPOINT jupyterhub

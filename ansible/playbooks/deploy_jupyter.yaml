@@ -1,6 +1,8 @@
 ---
   - name: Deploy JupyterHub
     hosts: "{{ target_hosts | default('all') }}"
+    vars_files:
+      - ../../manifests/jupyterhub/secret-env.yaml  
     tasks:
       - name: Install dependencies
         ansible.builtin.pip: 
@@ -14,6 +16,7 @@
       - name: Deploy
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+          OAUTH_CLIENT_SECRET: "{{ OAUTH_CLIENT_SECRET }}"
         community.docker.docker_compose:
           project_src: ".ansible/jupyterhub"
           debug: true
