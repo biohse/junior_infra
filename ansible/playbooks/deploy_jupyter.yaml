@@ -13,7 +13,15 @@
           dest: ".ansible/"
           mode: "600"
           decrypt: false
-      - name: Deploy
+      - name: Build Notebook images
+        environment:
+          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+          DOCKER_BUILDKIT: 1
+        ansible.builtin.shell:
+          cmd: |-
+            docker compose build 
+          chdir: .ansible/jupyterhub/singleuser
+      - name: Deploy Hub
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
           OAUTH_CLIENT_SECRET: "{{ OAUTH_CLIENT_SECRET }}"

@@ -10,8 +10,9 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - ./hub/jupyterhub_config.py:/jupyterhub_config.py:ro
+      - ./hub/hse_logo.png:/hse_logo.png:ro
     environment:
-      DOCKER_JUPYTER_IMAGE: jupyter/scipy-notebook
+      DOCKER_JUPYTER_IMAGE: jupyter_user
       DOCKER_NETWORK_NAME: jupyterhub_default
       HUB_IP: jupyterhub-hub
       OAUTH_CLIENT_ID: jupyter-junior

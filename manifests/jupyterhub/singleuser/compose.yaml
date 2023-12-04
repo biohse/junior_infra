@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  jupyterhub:
+    image: jupyter_user
+    build:
+      context: ./jupyter_user
+      dockerfile: Dockerfile
