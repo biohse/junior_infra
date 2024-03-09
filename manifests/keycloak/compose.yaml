@@ -4,6 +4,8 @@ services:
     image: library/postgres:${KC_POSTGRES_IMAGE_TAG:-15}
     container_name: ${POSTGRES_CONTAINER_NAME:-postgres}
     restart: unless-stopped
+    volumes:
+      - database-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
@@ -46,3 +48,6 @@ services:
       interval: 30s
       retries: 3
       timeout: 5s
+
+volumes:
+  database-data:
