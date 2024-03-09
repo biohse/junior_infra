@@ -48,12 +48,14 @@ c.GenericOAuthenticator.userdata_url = os.environ['OAUTH_USERDATA_URL']
 c.GenericOAuthenticator.scope = ["openid", "email", "profile"]
 c.GenericOAuthenticator.username_claim = "preferred_username"
 c.GenericOAuthenticator.claim_groups_key = "groups"
+c.GenericOAuthenticator.allow_all = True
+c.GenericOAuthenticator.auto_login = True
 
 c.Authenticator.admin_users = {"narek01", "zhiyanov"}
 c.DockerSpawner.notebook_dir = "/home/jovyan"
 c.Spawner.default_url = "/lab" # use JupyterLab (instead of Notebook) by default
 c.Spawner.cpu_limit = 4
 
-c.JupyterHub.allow_named_servers = True
+c.JupyterHub.allow_named_servers = False
 c.JupyterHub.default_url = default_url_fn
 c.JupyterHub.logo_file = "hse_logo.png"
