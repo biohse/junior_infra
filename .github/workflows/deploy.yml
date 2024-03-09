@@ -6,8 +6,9 @@ jobs:
   jupyterhub:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Setup Ansible
-      uses: .github/actions/setup-ansible
+      uses: ./.github/actions/setup-ansible
     - name: Deploy JupyterHub
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -18,8 +19,9 @@ jobs:
   nginx:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Setup Ansible
-      uses: .github/actions/setup-ansible
+      uses: ./.github/actions/setup-ansible
     - name: Deploy Nginx Proxy
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -30,8 +32,9 @@ jobs:
   keycloak:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Setup Ansible
-      uses: .github/actions/setup-ansible
+      uses: ./.github/actions/setup-ansible
     - name: Deploy Keycloak
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -42,8 +45,9 @@ jobs:
   outline:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - name: Setup Ansible
-      uses: .github/actions/setup-ansible
+      uses: ./.github/actions/setup-ansible
     - name: Deploy Outline Wiki
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
