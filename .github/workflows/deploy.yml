@@ -9,6 +9,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Setup Ansible
       uses: ./.github/actions/setup-ansible
+      with:
+        ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        ssh-key: ${{ secrets.SSH_KEY }}
     - name: Deploy JupyterHub
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -22,6 +25,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Setup Ansible
       uses: ./.github/actions/setup-ansible
+      with:
+        ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        ssh-key: ${{ secrets.SSH_KEY }}
     - name: Deploy Nginx Proxy
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -35,6 +41,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Setup Ansible
       uses: ./.github/actions/setup-ansible
+      with:
+        ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        ssh-key: ${{ secrets.SSH_KEY }}
     - name: Deploy Keycloak
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
@@ -48,6 +57,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Setup Ansible
       uses: ./.github/actions/setup-ansible
+      with:
+        ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+        ssh-key: ${{ secrets.SSH_KEY }}
     - name: Deploy Outline Wiki
       env:
         ANSIBLE_USER_PASSWORD: ${{ secrets.ANSIBLE_USER_PASSWORD }}
