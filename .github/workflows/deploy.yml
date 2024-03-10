@@ -3,8 +3,27 @@ name: Ansible deploy
 on: [push]
 
 jobs:
-  jupyterhub:
+  check_changes:
     runs-on: ubuntu-latest
+    outputs:
+      jupyterhub_changed: ${{ steps.filter.outputs.jupyterhub_changed }}
+      keycloak_changed: ${{ steps.filter.outputs.keycloak_changed }}
+      nginx_changed: ${{ steps.filter.outputs.nginx_changed }}
+      outline_changed: ${{ steps.filter.outputs.outline_changed }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: filter
+        run: |
+          for service in "jupyterhub" "keycloak" "nginx" "outline"; do
+              if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q "manifests/$service/"; then
+                  echo "::set-output name=${service}_changed::true"
+              fi
+          done
+
+  jupyterhub:
+    needs: check_changes
+    runs-on: ubuntu-latest
+    if: needs.check_changes.outputs.jupyterhub_changed == 'true'
     steps:
     - uses: actions/checkout@v4
     - name: Setup Ansible
@@ -20,7 +39,9 @@ jobs:
         ansible-playbook playbooks/deploy_jupyter.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
 
   nginx:
+    needs: check_changes
     runs-on: ubuntu-latest
+    if: needs.check_changes.outputs.nginx_changed == 'true'
     steps:
     - uses: actions/checkout@v4
     - name: Setup Ansible
@@ -36,7 +57,9 @@ jobs:
         ansible-playbook playbooks/deploy_proxy.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
 
   keycloak:
+    needs: check_changes
     runs-on: ubuntu-latest
+    if: needs.check_changes.outputs.keycloak_changed == 'true'
     steps:
     - uses: actions/checkout@v4
     - name: Setup Ansible
@@ -52,7 +75,9 @@ jobs:
         ansible-playbook playbooks/deploy_keycloak.yaml -e "ansible_user=ansible" -e "ansible_private_key_file=../.ssh/ansible.key" -e "ansible_become_password=$ANSIBLE_USER_PASSWORD" -e "ansible_remote_tmp=/tmp/ansible"
 
   outline:
+    needs: check_changes
     runs-on: ubuntu-latest
+    if: needs.check_changes.outputs.outline_changed == 'true'
     steps:
     - uses: actions/checkout@v4
     - name: Setup Ansible
