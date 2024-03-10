@@ -12,6 +12,8 @@ jobs:
       outline_changed: ${{ steps.filter.outputs.outline_changed }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - id: filter
         run: |
           for service in "jupyterhub" "keycloak" "nginx" "outline"; do

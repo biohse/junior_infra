@@ -1,6 +1,6 @@
 plotly==5.19.0
-biopython==1.83
 tqdm==4.66.1
+biopython==1.83
 # rpy2==3.5.6
 # pyreadr==0.5.0
 
