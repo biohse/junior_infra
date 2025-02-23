@@ -1,0 +1,26 @@
+---
+  - name: Deploy Uptime Kuma Monitoring Tool
+    hosts: "{{ target_hosts | default('timeweb_primary') }}"
+    vars_files:
+      - ../../manifests/uptime-kuma/secret-env.yaml
+    tasks:
+      - name: Install dependencies
+        ansible.builtin.pip: 
+          name: ["docker", "PyYAML", "docker-compose"]
+      - name: Copy Docker Compose files
+        copy:
+          src: ../../manifests/uptime-kuma # We are in junior_infra/ansible/playbooks
+          dest: ".ansible/"
+          mode: "0600"
+          decrypt: false
+      - name: Deploy
+        environment:
+          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+          # SECRET_KEY: "{{ SECRET_KEY }}"
+          # UTILS_SECRET: "{{ UTILS_SECRET }}"
+          # OIDC_CLIENT_SECRET: "{{ OIDC_CLIENT_SECRET }}"
+          # POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
+        community.docker.docker_compose:
+          project_name: uptime-kuma
+          project_src: ".ansible/uptime-kuma"
+          debug: true

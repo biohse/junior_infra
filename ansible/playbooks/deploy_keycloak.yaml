@@ -1,6 +1,6 @@
 ---
   - name: Deploy Keycloak
-    hosts: "{{ target_hosts | default('all') }}"
+    hosts: "{{ target_hosts | default('junior') }}"
     vars_files:
       - ../../manifests/keycloak/secret-env.yaml  
     tasks:

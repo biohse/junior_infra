@@ -1,5 +1,16 @@
 nodes:
-  hosts:
-    junior:
-      ansible_host: 80.90.191.205
-      ansible_port: 2255
+  children:
+    metal:
+      hosts:
+        junior:
+          ansible_port: 2255
+        monster:
+          ansible_port: 50505
+        fbb-nas:
+          ansible_port: 40404
+    vps:
+      hosts:
+        timeweb_primary:
+          ansible_host: 80.90.191.205
+        timeweb_secondary:
+          ansible_host: 89.23.115.77

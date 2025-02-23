@@ -1,6 +1,6 @@
 ---
   - name: Deploy JupyterHub
-    hosts: "{{ target_hosts | default('all') }}"
+    hosts: "{{ target_hosts | default('junior') }}"
     vars_files:
       - ../../manifests/jupyterhub/secret-env.yaml  
     tasks:
@@ -16,7 +16,7 @@
       - name: Build Notebook images
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
-          DOCKER_BUILDKIT: 1
+          DOCKER_BUILDKIT: '1'
         ansible.builtin.shell:
           cmd: |-
             docker compose build 

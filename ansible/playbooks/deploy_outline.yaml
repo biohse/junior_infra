@@ -1,6 +1,6 @@
 ---
   - name: Deploy Outline Wiki
-    hosts: "{{ target_hosts | default('all') }}"
+    hosts: "{{ target_hosts | default('junior') }}"
     vars_files:
       - ../../manifests/outline/secret-env.yaml  
     tasks:

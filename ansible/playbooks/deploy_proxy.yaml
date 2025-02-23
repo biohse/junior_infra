@@ -1,6 +1,6 @@
 ---
   - name: Deploy Nginx Proxy
-    hosts: "{{ target_hosts | default('all') }}"
+    hosts: "{{ target_hosts | default('junior') }}"
     tasks:
       - name: Install dependencies
         ansible.builtin.pip: 
