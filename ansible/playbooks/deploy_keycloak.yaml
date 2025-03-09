@@ -18,7 +18,6 @@
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
           KEYCLOAK_ADMIN_PASSWORD: "{{ KEYCLOAK_ADMIN_PASSWORD }}"
           POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
-        community.docker.docker_compose:
+        community.docker.docker_compose_v2:
           project_name: keycloak
           project_src: ".ansible/keycloak"
-          debug: true

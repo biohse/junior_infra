@@ -2,7 +2,7 @@ version: "3.2"
 services:
 
   outline:
-    image: outlinewiki/outline:0.73.1
+    image: outlinewiki/outline:0.82.0
     env_file: ./docker.env
     restart: unless-stopped
     volumes:

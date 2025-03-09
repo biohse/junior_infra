@@ -25,6 +25,5 @@
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
           OAUTH_CLIENT_SECRET: "{{ OAUTH_CLIENT_SECRET }}"
-        community.docker.docker_compose:
+        community.docker.docker_compose_v2:
           project_src: ".ansible/jupyterhub"
-          debug: true

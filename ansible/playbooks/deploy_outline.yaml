@@ -20,7 +20,6 @@
           UTILS_SECRET: "{{ UTILS_SECRET }}"
           OIDC_CLIENT_SECRET: "{{ OIDC_CLIENT_SECRET }}"
           POSTGRES_PASSWORD: "{{ POSTGRES_PASSWORD }}"
-        community.docker.docker_compose:
+        community.docker.docker_compose_v2:
           project_name: outline
           project_src: ".ansible/outline"
-          debug: true
