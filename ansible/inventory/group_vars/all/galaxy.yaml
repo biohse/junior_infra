@@ -1,0 +1,41 @@
+galaxy:
+  domain: galaxy.biohse.ru
+  config: # https://docs.galaxyproject.org/en/master/admin/config.html
+    admin_users: narek030601@yandex.ru
+    allow_user_creation: False
+    allow_user_impersonation: True
+    brand: HSE - Faculty of Biology and Biotechnology
+    enable_notification_system: True
+    enable_oidc: True
+    expose_user_email: True
+    expose_user_name: True
+    ga4gh_service_environment: prod
+    ga4gh_service_id: ru.biohse.galaxy
+    log_level: WARNING
+    organization_name: HSE University
+    organization_url: https://biology.hse.ru/
+    require_login: True
+
+  mounts:
+    - src: /data/galaxy
+      dest: /export
+    - src: ./oidc_config.xml
+      dest: /etc/galaxy/oidc_config.xml
+    - src: ./oidc_backends_config.xml # TODO: fix linux permissions
+      dest: /etc/galaxy/oidc_backends_config.xml
+    - src: /var/run/docker.sock
+      dest: /var/run/docker.sock
+
+  oidc:
+    - name: Keycloak
+      client_id: galaxy
+      client_secret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37386331323764363130326163646535663162373035613334306433303862663339646438353930
+          3833643834363239306461643266343934306439666436620a376266316436316638363563326365
+          61316465353238393362623733393865396538313734646463323062393865353438363135363536
+          3263363730656563640a666438363339333239623137303462353430663832663138353137623063
+          34313837356435363765366233396565386135313835613564366562363633653330353435313938
+          3562636464313939393230656338396333343366356631316263
+      redirect_uri: https://galaxy.biohse.ru/authnz/keycloak/callback
+      url: https://login.biohse.ru/realms/staff

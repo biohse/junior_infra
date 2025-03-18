@@ -1,0 +1,28 @@
+---
+  - name: Deploy Galaxy
+    hosts: "{{ target_hosts | default('junior') }}"
+    vars:
+      app_name: galaxy
+    vars_files:
+      - ../../manifests/galaxy/secret-env.yaml  
+    tasks:
+      - name: Creates directory
+        file:
+          path: .ansible/{{ app_name }}
+          state: directory
+      - name: Template files
+        template:
+          src: "{{ app_name }}/{{ item }}.j2"
+          dest: .ansible/{{ app_name }}/{{ item }}
+          mode: 444
+        loop:
+          - compose.yaml
+          - oidc_config.xml
+          - oidc_backends_config.xml
+      - name: Deploy
+        environment:
+          PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
+        community.docker.docker_compose_v2:
+          project_name: "{{ app_name }}"
+          project_src: ".ansible/{{ app_name }}"
+          recreate: always

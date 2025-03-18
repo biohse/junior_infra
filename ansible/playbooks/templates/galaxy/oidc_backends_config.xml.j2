@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<OIDC>
+{% for provider in galaxy.oidc %}
+    <provider name="{{ provider.name }}">
+        <client_id>{{ provider.client_id }}</client_id>
+        <client_secret>{{ provider.client_secret }}</client_secret>
+        <redirect_uri>{{ provider.redirect_uri }}</redirect_uri>
+        <url>{{ provider.url }}</url>
+    </provider>
+{% endfor %}
+</OIDC>

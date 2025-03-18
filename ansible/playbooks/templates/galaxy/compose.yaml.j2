@@ -1,0 +1,24 @@
+services:
+  galaxy:
+    image: quay.io/bgruening/galaxy:24.2
+    container_name: galaxy
+    privileged: true
+    ports:
+      - "4002:4002"
+    volumes:
+{% for item in galaxy.mounts %}
+      - {{ item.src }}:{{ item.dest }}
+{% endfor %}
+    environment:
+      VIRTUAL_HOST: {{ galaxy.domain }}
+      LETSENCRYPT_HOST: {{ galaxy.domain }}
+      VIRTUAL_PORT: 80
+      GALAXY_DOMAIN: {{ galaxy.domain }}
+      GALAXY_DESTINATIONS_DEFAULT: slurm_cluster_docker
+      OAUTHLIB_INSECURE_TRANSPORT: 1
+{% for key, value in galaxy.config.items() %}
+      GALAXY_CONFIG_{{ key | upper }}: {{ value }}
+{% endfor %}
+
+volumes:
+  galaxy_storage:
