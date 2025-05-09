@@ -21,3 +21,4 @@
         community.docker.docker_compose_v2:
           project_name: keycloak
           project_src: ".ansible/keycloak"
+          recreate: always

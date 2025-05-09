@@ -1,0 +1,90 @@
+{
+  "modno":  1,
+  "version":  4,
+  "instance":  "biohse-backup",
+  "repos":  [
+    {
+      "id":  "yandex-cold",
+      "uri":  "{{ backrest.s3.uri }}",
+      "guid":  "6b37122746053a8d7d4d29374575cac0c9d2282af3fbec9d65a49180adad9da8",
+      "password":  "{{ backrest.s3.restic_password }}",
+      "env":  [
+        "AWS_ACCESS_KEY_ID={{ backrest.s3.aws_access_key_id }}",
+        "AWS_SECRET_ACCESS_KEY={{ backrest.s3.aws_secret_access_key }}"
+      ],
+      "flags": [
+        "--compression max"
+      ],
+      "prunePolicy": {
+        "maxUnusedPercent": 5,
+        "schedule": {
+          "clock": "CLOCK_LAST_RUN_TIME",
+          "maxFrequencyDays": 30
+        }
+      },
+      "checkPolicy": {
+        "readDataSubsetPercent": 10,
+        "schedule": {
+          "clock": "CLOCK_LAST_RUN_TIME",
+          "maxFrequencyDays": 90
+        }
+      },
+      "commandPrefix": {
+        "ioNice": "IO_BEST_EFFORT_LOW",
+        "cpuNice": "CPU_LOW"
+      },
+      "autoUnlock": true,
+      "hooks": [
+        {
+          "actionShoutrrr": {
+            "template": "{% raw %}{{ .Summary }}{% endraw %}",
+            "shoutrrrUrl": "telegram://{{ backrest.telegram_bot_token }}@telegram?chats=-1002545292936&preview=No"
+          },
+          "conditions": [
+            "CONDITION_ANY_ERROR",
+            "CONDITION_CHECK_START",
+            "CONDITION_CHECK_ERROR",
+            "CONDITION_CHECK_SUCCESS",
+            "CONDITION_FORGET_START",
+            "CONDITION_FORGET_ERROR",
+            "CONDITION_FORGET_SUCCESS",
+            "CONDITION_PRUNE_SUCCESS",
+            "CONDITION_PRUNE_ERROR",
+            "CONDITION_PRUNE_START"
+          ]
+        }
+      ]
+    }
+  ],
+  "plans":  [
+    {
+      "id": "test",
+      "repo": "yandex-cold",
+      "paths": [
+{% for path in backrest.backup_paths %}
+          "/userdata/{{ path.lstrip('/') }}"{% if not loop.last %},{% endif %} 
+{% endfor %}
+      ],
+      "excludes": [],
+      "iexcludes": [],
+      "schedule": {
+          "clock": "CLOCK_LOCAL",
+          "cron": "15 3 * * 2,6"
+      },
+      "backup_flags": [],
+      "retention": {
+          "policyTimeBucketed": {
+          "yearly": 5,
+          "monthly": 12,
+          "weekly": 12,
+          "daily": 30,
+          "hourly": 24
+          }
+      },
+      "hooks": []
+    }
+  ],
+  "auth":  {
+    "disabled":  true
+  }
+}

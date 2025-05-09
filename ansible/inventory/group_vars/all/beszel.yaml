@@ -1,0 +1,9 @@
+beszel:
+  hub:
+    domain: beszel.biohse.ru
+    version: 0.11
+    config:
+      APP_URL: https://beszel.biohse.ru/
+      DISABLE_PASSWORD_AUTH: true
+      SHARE_ALL_SYSTEMS: true
+      USER_CREATION: true

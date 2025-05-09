@@ -21,6 +21,8 @@ services:
       - keycloak_default
       - outline_default
       - galaxy_default
+      - beszel_hub_default
+      - backrest_default
     restart: unless-stopped
 
   nginx-proxy-acme:
@@ -40,6 +42,8 @@ services:
       - keycloak_default
       - outline_default
       - galaxy_default
+      - beszel_hub_default
+      - backrest_default
     restart: unless-stopped
 
 networks:
@@ -54,6 +58,10 @@ networks:
   outline_default:
     external: true
   galaxy_default:
+    external: true
+  beszel_hub_default:
+    external: true
+  backrest_default:
     external: true
 
 volumes:

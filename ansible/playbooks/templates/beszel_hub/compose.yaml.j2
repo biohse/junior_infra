@@ -1,0 +1,17 @@
+services:
+  beszel:
+    image: henrygd/beszel:{{ beszel.hub.version }}
+    container_name: beszel
+    restart: unless-stopped
+    volumes:
+        - beszel_data:/beszel_data
+    environment:
+      VIRTUAL_HOST: {{ beszel.hub.domain }}
+      LETSENCRYPT_HOST: {{ beszel.hub.domain }}
+      VIRTUAL_PORT: 8090
+{% for key, value in beszel.hub.config.items() %}
+      BESZEL_HUB_{{ key | upper }}: {{ value }}
+{% endfor %}
+
+volumes:
+  beszel_data:

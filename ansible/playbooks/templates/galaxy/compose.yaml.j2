@@ -3,6 +3,7 @@ services:
     image: quay.io/bgruening/galaxy:24.2
     container_name: galaxy
     privileged: true
+    restart: unless-stopped
     ports:
       - "4002:4002"
     volumes:

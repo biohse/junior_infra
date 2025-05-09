@@ -1,0 +1,32 @@
+services:
+  backrest:
+    image: garethgeorge/backrest:v1.8
+    container_name: backrest
+    restart: unless-stopped
+    environment:
+      BACKREST_CONFIG: /config/config.json
+      BACKREST_DATA: /data
+      BACKREST_PORT: "0.0.0.0:9898"
+      TZ: Europe/Moscow
+    volumes:
+      - "backrest_data:/data"
+      - "./config.json:/config/config.json"
+{% for path in backrest.mounts %}
+      - {{ path }}:/userdata/{{ path.lstrip('/') }}:ro
+{% endfor %}
+    expose:
+      - "9898"
+
+  oidc-proxy:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.9.0
+    container_name: backrest_auth_proxy
+    environment:
+      VIRTUAL_HOST: {{ backrest.domain }}
+      LETSENCRYPT_HOST: {{ backrest.domain }}
+      VIRTUAL_PORT: 4180
+{% for key, value in backrest.oauth2_proxy.items() %}
+      OAUTH2_PROXY_{{ key | upper }}: {{ value }}
+{% endfor %}
+
+volumes:
+  backrest_data:

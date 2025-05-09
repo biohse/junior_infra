@@ -23,3 +23,4 @@
         community.docker.docker_compose_v2:
           project_name: outline
           project_src: ".ansible/outline"
+          recreate: always
