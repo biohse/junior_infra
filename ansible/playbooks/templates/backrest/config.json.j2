@@ -13,7 +13,8 @@
         "AWS_SECRET_ACCESS_KEY={{ backrest.s3.aws_secret_access_key }}"
       ],
       "flags": [
-        "--compression max"
+        "--compression max",
+        "--pack-size 50"
       ],
       "prunePolicy": {
         "maxUnusedPercent": 5,
@@ -45,12 +46,12 @@
             "CONDITION_CHECK_START",
             "CONDITION_CHECK_ERROR",
             "CONDITION_CHECK_SUCCESS",
-            "CONDITION_FORGET_START",
             "CONDITION_FORGET_ERROR",
-            "CONDITION_FORGET_SUCCESS",
             "CONDITION_PRUNE_SUCCESS",
             "CONDITION_PRUNE_ERROR",
-            "CONDITION_PRUNE_START"
+            "CONDITION_PRUNE_START",
+            "CONDITION_SNAPSHOT_ERROR",
+            "CONDITION_SNAPSHOT_WARNING"
           ]
         }
       ]
@@ -65,13 +66,23 @@
           "/userdata/{{ path.lstrip('/') }}"{% if not loop.last %},{% endif %} 
 {% endfor %}
       ],
-      "excludes": [],
-      "iexcludes": [],
+      "excludes": [
+{% for exclude in backrest.excludes %}
+          "{{ exclude }}"{% if not loop.last %},{% endif %} 
+{% endfor %}
+      ],
+      "iexcludes": [
+{% for exclude in backrest.excludes_case_insensitive %}
+          "{{ exclude }}"{% if not loop.last %},{% endif %} 
+{% endfor %}
+      ],
       "schedule": {
           "clock": "CLOCK_LOCAL",
           "cron": "15 3 * * 2,6"
       },
-      "backup_flags": [],
+      "backup_flags": [
+        "--compression max"
+      ],
       "retention": {
           "policyTimeBucketed": {
           "yearly": 5,

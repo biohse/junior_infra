@@ -7,6 +7,20 @@ backrest:
     - /home/narek/Coronaviruses/SARS-CoV-2
     - /mnt/seq/our-data/08.11.2023_mRNA-seq/raw/X201SC23054354-Z01-F001.tar
     - /mnt/seq/our-data/08.11.2023_miRNA-seq/raw/X201SC23054363-Z01-F001.tar
+    # - /mnt/seq/our-data/24.05.2023_genome/raw
+    # - /mnt/seq/our-data/18.09.2020_HT29_hypoxia_mRNA-seq/raw
+    # - /mnt/seq/our-data/14.11.2022_mRNA-seq/raw
+    # - /mnt/seq/our-data/14.03.2023_miRNA-seq/raw
+    # - /mnt/seq/our-data/11.07.2023_mitochondrion/raw
+    # - /mnt/seq/our-data/09.09.2020_HT29_hypoxia_miRNA-seq/raw
+    # - /mnt/seq/our-data/07.09.2023_miRNA-seq/raw
+    # - /mnt/seq/mRNA-seq_Nikulin
+    # - /mnt/seq/our_RNA-seq
+
+  # https://restic.readthedocs.io/en/latest/040_backup.html#excluding-files
+  # Надо учитывать, что для backrest все пользовательские данные лежат в папке /userdata/
+  excludes: []
+  excludes_case_insensitive: []
 
 
   domain: backrest.biohse.ru

@@ -17,7 +17,6 @@ services:
     networks:
       - jupyterhub_default
       - portainer_bridge
-      - cvat_cvat
       - keycloak_default
       - outline_default
       - galaxy_default
@@ -38,7 +37,6 @@ services:
     networks:
       - jupyterhub_default
       - portainer_bridge
-      - cvat_cvat
       - keycloak_default
       - outline_default
       - galaxy_default
@@ -50,8 +48,6 @@ networks:
   jupyterhub_default:
     external: true
   portainer_bridge:
-    external: true
-  cvat_cvat:
     external: true
   keycloak_default:
     external: true
