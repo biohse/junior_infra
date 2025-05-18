@@ -2,7 +2,9 @@ galaxy:
   domain: galaxy.biohse.ru
   config: # https://docs.galaxyproject.org/en/master/admin/config.html
     admin_users: narek030601@yandex.ru
+    allow_path_paste: True
     allow_user_creation: False
+    allow_user_deletion: False
     allow_user_impersonation: True
     brand: HSE - Faculty of Biology and Biotechnology
     enable_notification_system: True
@@ -11,18 +13,24 @@ galaxy:
     expose_user_name: True
     ga4gh_service_environment: prod
     ga4gh_service_id: ru.biohse.galaxy
-    log_level: WARNING
+    library_import_dir: /data/import
+    log_level: INFO
     organization_name: HSE University
     organization_url: https://biology.hse.ru/
     require_login: True
 
   mounts:
+    - src: /mnt/seq
+      dest: /data/import
+      readonly: true
     - src: /data/galaxy
       dest: /export
     - src: ./oidc_config.xml
       dest: /etc/galaxy/oidc_config.xml
     - src: ./oidc_backends_config.xml # TODO: fix linux permissions
       dest: /etc/galaxy/oidc_backends_config.xml
+    - src: ./welcome.html
+      dest: /etc/galaxy/web/welcome.html
     - src: /var/run/docker.sock
       dest: /var/run/docker.sock
 

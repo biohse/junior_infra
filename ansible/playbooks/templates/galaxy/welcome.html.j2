@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Добро пожаловать в FBB HSE Galaxy</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      line-height: 1.6;
+      color: #222;
+      background: #f5f7fa;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      margin: 0.2em 0 0.4em;
+      font-size: 2.5rem;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav a {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: #428bca;
+      color: #fff;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    nav a:hover {
+      background: #2a6496;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+    blockquote {
+      margin: 1.5rem 0;
+      padding-left: 1rem;
+      border-left: 4px solid #428bca;
+      color: #444;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FBB HSE Galaxy</h1>
+    <p>Платформа факультета биологии НИУ ВШЭ для хранения и анализа данных NGS</p>
+  </header>
+
+  <nav>
+    <a href="https://wiki.biohse.ru/" target="_blank">Wiki / Документация</a>
+    <a href="https://galaxyproject.org/learn/" target="_blank">Учебные материалы Galaxy</a>
+    <a href="https://t.me/narek01" target="_blank">Связь с поддержкой</a>
+  </nav>
+
+  <main>
+    <h2>С чего начать</h2>
+    <ol>
+      <li>Войдите через единый аккаунт (Keycloak) — кнопка <strong>Login</strong> в правом верхнем углу.</li>
+      <li>Импортируйте данные в <em>History</em> через Data Library или Rule‑based uploader.</li>
+      <li>Выберите готовый workflow или соберите собственный в визуальном конструкторе.</li>
+    </ol>
+
+    <h2>Полезные ссылки</h2>
+    <ul>
+      <li><a href="https://galaxyproject.org/use/" target="_blank">Официальная документация Galaxy</a></li>
+      <li><a href="https://training.galaxyproject.org/" target="_blank">Galaxy Training Network (GTN)</a></li>
+      <li><a href="https://multiqc.info/" target="_blank">MultiQC</a>, <a href="https://github.com/OpenGene/fastp" target="_blank">fastp</a> и другие инструменты</li>
+    </ul>
+
+    <blockquote>
+      «Making science reproducible, one click at a time.»
+    </blockquote>
+  </main>
+
+  <footer>
+    &copy; 2025 BioHSE NGS Platform
+  </footer>
+</body>
+</html>

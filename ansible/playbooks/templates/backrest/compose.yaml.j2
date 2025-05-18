@@ -20,6 +20,7 @@ services:
   oidc-proxy:
     image: quay.io/oauth2-proxy/oauth2-proxy:v7.9.0
     container_name: backrest_auth_proxy
+    restart: unless-stopped
     environment:
       VIRTUAL_HOST: {{ backrest.domain }}
       LETSENCRYPT_HOST: {{ backrest.domain }}

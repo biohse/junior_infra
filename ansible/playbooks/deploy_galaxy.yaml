@@ -3,13 +3,15 @@
     hosts: "{{ target_hosts | default('junior') }}"
     vars:
       app_name: galaxy
-    vars_files:
-      - ../../manifests/galaxy/secret-env.yaml  
     tasks:
       - name: Creates directory
         file:
-          path: .ansible/{{ app_name }}
+          path: .ansible/{{ app_name }}/{{ item }}
           state: directory
+        loop:
+          - /
+          - /build/
+
       - name: Template files
         template:
           src: "{{ app_name }}/{{ item }}.j2"
@@ -19,6 +21,20 @@
           - compose.yaml
           - oidc_config.xml
           - oidc_backends_config.xml
+          - welcome.html
+          - build/Dockerfile
+          - build/my_tool_list.yml
+
+      - name: Build
+        community.docker.docker_image:
+          name: "biohse_{{ app_name }}:latest"
+          build:
+            nocache: true
+            path: .ansible/{{ app_name }}/build/
+          debug: true
+          source: build
+          force_source: true
+
       - name: Deploy
         environment:
           PATH: /home/ansible/.local/bin:{{ ansible_env.PATH }}
